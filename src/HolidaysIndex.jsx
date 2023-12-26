@@ -7,6 +7,7 @@ export function HolidaysIndex(props) {
           <h2>{holiday.name}</h2>
           <p>{holiday.date}</p>
           <p>{holiday.description}</p>
+          <button onClick={() => props.onShowHoliday(holiday)}>More info</button>
         </div>
       ))}
     </div>
