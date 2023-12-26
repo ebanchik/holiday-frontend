@@ -25,13 +25,30 @@ import { HolidaysShow} from "./HolidaysShow"
       successCallback();
     });
   };
-  
+
   const handleShowHoliday = (holiday) => {
       console.log("handleShowHoliday", holiday);
       setIsHolidaysShowVisible(true);
       setCurrentHoliday(holiday);
     };
-    
+
+  const handleUpdateHoliday = (id, params, successCallback) => {
+    console.log("handleUpdateHoliday", params);
+    axios.patch(`http://localhost:3000/holidays/${id}.json`, params).then((response) => {
+      setHolidays(
+        holidays.map((holiday) => {
+          if (holiday.id === response.data.id) {
+            return response.data;
+          } else {
+            return holiday;
+          }
+        })
+      );
+      successCallback();
+      handleClose();
+    });
+  };
+
     const handleClose = () => {
       console.log("handleClose");
       setIsHolidaysShowVisible(false);
@@ -44,7 +61,7 @@ import { HolidaysShow} from "./HolidaysShow"
         <HolidaysNew onCreateHoliday={handleCreateHoliday} />
         <HolidaysIndex holidays={holidays} onShowHoliday={handleShowHoliday}/>
         <Modal show = {isHolidaysShowVisible} onClose={handleClose}>
-          <HolidaysShow holiday={currentHoliday}/>
+          <HolidaysShow holiday={currentHoliday} onUpdateHoliday={handleUpdateHoliday}/>
         </Modal>
       </div>
     );
