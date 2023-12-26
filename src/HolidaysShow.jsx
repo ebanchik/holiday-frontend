@@ -24,6 +24,8 @@ export function HolidaysShow(props) {
         <div>
           Description: <input defaultValue={props.holiday.description} name="description" type="text" />
         </div>
+        <br/>
+        <button type="submit">Update Holiday</button>
       </form>
     </div>
   );
