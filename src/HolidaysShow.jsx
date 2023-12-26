@@ -6,6 +6,10 @@ export function HolidaysShow(props) {
     props.onUpdateHoliday(props.holiday.id, params, () => event.target.reset());
   };
 
+  const handleClick = () => {
+    props.onDestroyHoliday(props.holiday);
+  };
+
   return (
     <div>
       <h1>Holiday information</h1>
@@ -27,6 +31,7 @@ export function HolidaysShow(props) {
         <br/>
         <button type="submit">Update Holiday</button>
       </form>
+      <button onClick={handleClick}>Destroy Holiday</button>
     </div>
   );
 }

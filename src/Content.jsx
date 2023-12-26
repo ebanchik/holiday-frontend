@@ -49,10 +49,18 @@ import { HolidaysShow} from "./HolidaysShow"
     });
   };
 
-    const handleClose = () => {
-      console.log("handleClose");
-      setIsHolidaysShowVisible(false);
-    };
+  const handleClose = () => {
+    console.log("handleClose");
+    setIsHolidaysShowVisible(false);
+  };
+
+  const handleDestroyHoliday = (holiday) => {
+    console.log("handleDestroyHoliday", holiday);
+    axios.delete(`http://localhost:3000/holidays/${holiday.id}.json`).then((response) => {
+      setHolidays(holidays.filter((h) => h.id !== holiday.id));
+      handleClose();
+    });
+  }
 
    useEffect(handleIndexHolidays, []);
 
@@ -61,7 +69,7 @@ import { HolidaysShow} from "./HolidaysShow"
         <HolidaysNew onCreateHoliday={handleCreateHoliday} />
         <HolidaysIndex holidays={holidays} onShowHoliday={handleShowHoliday}/>
         <Modal show = {isHolidaysShowVisible} onClose={handleClose}>
-          <HolidaysShow holiday={currentHoliday} onUpdateHoliday={handleUpdateHoliday}/>
+          <HolidaysShow holiday={currentHoliday} onUpdateHoliday={handleUpdateHoliday} onDestroyHoliday={handleDestroyHoliday}/>
         </Modal>
       </div>
     );
