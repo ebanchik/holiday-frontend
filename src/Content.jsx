@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { HolidaysIndex } from "./HolidaysIndex";
+import { HolidaysNew } from "./HolidaysNew";
 
   export function Content() {
    const [holidays, setHolidays] = useState([]);
@@ -13,11 +14,20 @@ import { HolidaysIndex } from "./HolidaysIndex";
      });
    };
 
+  const handleCreateHoliday = (params, successCallback) => {
+    console.log("handleCreateHoliday", params);
+    axios.post("http://localhost:3000/holidays.json", params).then((response) => {
+      setHolidays([...holidays, response.data]);
+      successCallback();
+    });
+  };
+
    useEffect(handleIndexHolidays, []);
 
     return (
       <div>
-       <HolidaysIndex holidays={holidays} />
+        <HolidaysNew onCreateHoliday={handleCreateHoliday} />
+        <HolidaysIndex holidays={holidays} />
       </div>
     );
   }
